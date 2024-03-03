@@ -26,7 +26,7 @@ main(int argc, char *argv[])
   try
     {
       using namespace dealii;
-      using namespace dd_elasticity;
+      using namespace dd_stokes;
 
       MultithreadInfo::set_thread_limit(4);
       Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
@@ -50,21 +50,21 @@ main(int argc, char *argv[])
       mesh_m3d[7] = {3, 3, 3};
       mesh_m3d[8] = {1, 1, 1};
 
-      MixedElasticityProblemDD<2> no_mortars(1);
-      //        MixedElasticityProblemDD<2> lin_mortars(1,1,1);
-      //        MixedElasticityProblemDD<2> quad_mortars(1,1,2);
-      //        MixedElasticityProblemDD<2> cubic_mortars(1,2,3);
+      MixedStokesProblemDD<2> no_mortars(1);
+      //        MixedStokesProblemDD<2> lin_mortars(1,1,1);
+      //        MixedStokesProblemDD<2> quad_mortars(1,1,2);
+      //        MixedStokesProblemDD<2> cubic_mortars(1,2,3);
 
       std::string name1("M0");
       std::string name2("M1");
       std::string name3("M2");
       std::string name4("M3");
 
-      //        MixedElasticityProblemDD<3> no_mortars_3d(1);
-      //        MixedElasticityProblemDD<3> lin_mortars3d(1,1,1);
-      //        MixedElasticityProblemDD<3> quad_mortars_2_3d(1,1,1);
-      //        MixedElasticityProblemDD<3> cubic_mortars_1_3d(1,1,2);
-      //        MixedElasticityProblemDD<3> cubic_mortars_2_3d(1,1,2);
+      //        MixedStokesProblemDD<3> no_mortars_3d(1);
+      //        MixedStokesProblemDD<3> lin_mortars3d(1,1,1);
+      //        MixedStokesProblemDD<3> quad_mortars_2_3d(1,1,1);
+      //        MixedStokesProblemDD<3> cubic_mortars_1_3d(1,1,2);
+      //        MixedStokesProblemDD<3> cubic_mortars_2_3d(1,1,2);
 
       //        std::string name13("M0_3d");
       //        std::string name23("M1_3d");

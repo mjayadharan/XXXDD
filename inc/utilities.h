@@ -10,8 +10,10 @@
 #define ELASTICITY_MFEDD_UTILITIES_H
 
 #include "projector.h"
+#include <map>
+#include <deal.II/lac/block_vector.h>
 
-namespace dd_elasticity
+namespace dd_stokes
 {
   using namespace dealii;
 
@@ -439,18 +441,18 @@ namespace dd_elasticity
                  const DoFHandler<dim> &    dof1,
                  BlockVector<double> &      in_vec,
                  const Quadrature<dim - 1> &quad,
-                 ConstraintMatrix &         constraints,
+                 dealii::AffineConstraints<double>  &         constraints,
                  const std::vector<int> &   neighbors,
                  const DoFHandler<dim> &    dof2,
                  BlockVector<double> &      out_vec)
   {
     out_vec = 0;
 
-    Functions::FEFieldFunction<dim, DoFHandler<dim>, BlockVector<double>>
+    Functions::FEFieldFunction<dim, BlockVector<double>>
                                               fe_interface_data(dof1, in_vec);
     std::map<types::global_dof_index, double> boundary_values_velocity;
 
-    typename FunctionMap<dim>::type boundary_functions_velocity;
+    std::map<types::boundary_id, const Function<dim, double> *>  boundary_functions_velocity;
 
     constraints.clear();
 
@@ -467,6 +469,6 @@ namespace dd_elasticity
     constraints.close();
     constraints.distribute(out_vec);
   }
-} // namespace dd_elasticity
+} // namespace dd_stokes
 
 #endif // ELASTICITY_MFEDD_UTILITIES_H

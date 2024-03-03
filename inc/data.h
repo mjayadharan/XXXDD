@@ -11,7 +11,7 @@
 
 #include <deal.II/base/function.h>
 
-namespace dd_elasticity
+namespace dd_stokes
 {
   using namespace dealii;
 
@@ -1549,6 +1549,6 @@ namespace dd_elasticity
   //             Assert(false, ExcNotImplemented());
   //         }
   //     }
-} // namespace dd_elasticity
+} // namespace dd_stokes
 
 #endif // ELASTICITY_MFEDD_DATA_H

@@ -1,8 +1,9 @@
 /* ---------------------------------------------------------------------
- * Implementation of the MixedElasticityProblemDD class
+ * Implementation of the MixedStokesProblemDD class
  * ---------------------------------------------------------------------
  *
- * Author: Eldar Khattatov, University of Pittsburgh, 2016 - 2017
+ * Author: Manu Jayadharan, Northwestern University, 2024.
+ * based on the Eldar Khattatov's Elasticity DD implementation from 2017.
  */
 
 // Internals
@@ -50,13 +51,13 @@
 #include "../inc/utilities.h"
 #include "../inc/manu_testing.h"
 
-namespace dd_elasticity
+namespace dd_stokes
 {
   using namespace dealii;
 
-  // MixedElasticityDD class constructor
+  // MixedStokesDD class constructor
   template <int dim>
-  MixedElasticityProblemDD<dim>::MixedElasticityProblemDD(
+  MixedStokesProblemDD<dim>::MixedStokesProblemDD(
     const unsigned int degree,
     const unsigned int mortar_flag,
     const unsigned int mortar_degree)
@@ -74,7 +75,7 @@ namespace dd_elasticity
          dim,
          FE_DGQ<dim>(degree - 1),
          dim,
-         FE_Q<dim>(degree),
+         FE_DGQ<dim>(degree - 1),
          0.5 * dim * (dim - 1))
     , dof_handler(triangulation)
     , fe_mortar(FE_RaviartThomas<dim>(mortar_degree),
@@ -93,10 +94,10 @@ namespace dd_elasticity
   {}
 
 
-  // MixedElasticityProblemDD::make_grid_and_dofs
+  // MixedStokesProblemDD::make_grid_and_dofs
   template <int dim>
   void
-  MixedElasticityProblemDD<dim>::make_grid_and_dofs()
+  MixedStokesProblemDD<dim>::make_grid_and_dofs()
   {
     TimerOutput::Scope t(computing_timer, "Make grid and DoFs");
     system_matrix.clear();
@@ -123,13 +124,11 @@ namespace dd_elasticity
 
     dof_handler.distribute_dofs(fe);
     DoFRenumbering::component_wise(dof_handler);
-
     if (mortar_flag)
       dof_handler_mortar.distribute_dofs(fe_mortar);
 
-    std::vector<types::global_dof_index> dofs_per_component(
-      dim * dim + dim + 0.5 * dim * (dim - 1));
-    DoFTools::count_dofs_per_component(dof_handler, dofs_per_component);
+    std::vector<types::global_dof_index> dofs_per_component =
+            DoFTools::count_dofs_per_fe_component (dof_handler);
     unsigned int n_s = 0, n_u = 0, n_g = 0;
 
     for (unsigned int i = 0; i < dim; ++i)
@@ -147,6 +146,7 @@ namespace dd_elasticity
     n_stress_interface = n_s;
 
     BlockDynamicSparsityPattern dsp(3, 3);
+
     dsp.block(0, 0).reinit(n_s, n_s);
     dsp.block(0, 1).reinit(n_s, n_u);
     dsp.block(0, 2).reinit(n_s, n_g);
@@ -157,7 +157,9 @@ namespace dd_elasticity
     dsp.block(2, 1).reinit(n_g, n_u);
     dsp.block(2, 2).reinit(n_g, n_g);
     dsp.collect_sizes();
+
     DoFTools::make_sparsity_pattern(dof_handler, dsp);
+
 
     // Initialize system matrix
     sparsity_pattern.copy_from(dsp);
@@ -195,10 +197,8 @@ namespace dd_elasticity
 
     if (mortar_flag)
       {
-        std::vector<types::global_dof_index> dofs_per_component_mortar(
-          dim * dim + dim + 0.5 * dim * (dim - 1));
-        DoFTools::count_dofs_per_component(dof_handler_mortar,
-                                           dofs_per_component_mortar);
+        std::vector<types::global_dof_index> dofs_per_component_mortar =
+                DoFTools::count_dofs_per_fe_component (dof_handler_mortar);
         unsigned int n_s_mortar = 0, n_u_mortar = 0, n_p_mortar = 0;
 
         for (unsigned int i = 0; i < dim; ++i)
@@ -231,10 +231,10 @@ namespace dd_elasticity
   }
 
 
-  // MixedElasticityProblemDD - assemble_system
+  // MixedStokesProblemDD - assemble_system
   template <int dim>
   void
-  MixedElasticityProblemDD<dim>::assemble_system()
+  MixedStokesProblemDD<dim>::assemble_system()
   {
     TimerOutput::Scope t(computing_timer, "Assemble system");
     system_matrix  = 0;
@@ -435,10 +435,10 @@ namespace dd_elasticity
       }
   }
 
-  // MixedElasticityProblemDD - initialize the interface data structure
+  // MixedStokesProblemDD - initialize the interface data structure
   template <int dim>
   void
-  MixedElasticityProblemDD<dim>::get_interface_dofs()
+  MixedStokesProblemDD<dim>::get_interface_dofs()
   {
     TimerOutput::Scope t(computing_timer, "Get interface DoFs");
     interface_dofs.resize(GeometryInfo<dim>::faces_per_cell,
@@ -481,10 +481,10 @@ namespace dd_elasticity
   }
 
 
-  // MixedElasticityProblemDD - assemble RHS of star problems
+  // MixedStokesProblemDD - assemble RHS of star problems
   template <int dim>
   void
-  MixedElasticityProblemDD<dim>::assemble_rhs_star(
+  MixedStokesProblemDD<dim>::assemble_rhs_star(
     FEFaceValues<dim> &fe_face_values)
   {
     TimerOutput::Scope t(computing_timer, "Assemble RHS star");
@@ -550,15 +550,15 @@ namespace dd_elasticity
             }
 
         for (unsigned int i = 0; i < dofs_per_cell; ++i)
-          system_rhs_star(local_dof_indices[i]) += local_rhs(i);
+          system_rhs_star_elast(local_dof_indices[i]) += local_rhs(i);
       }
   }
 
 
-  // MixedElasticityProblemDD::solvers
+  // MixedStokesProblemDD::solvers
   template <int dim>
   void
-  MixedElasticityProblemDD<dim>::solve_bar()
+  MixedStokesProblemDD<dim>::solve_bar()
   {
     TimerOutput::Scope t(computing_timer, "Solve bar");
 
@@ -572,7 +572,7 @@ namespace dd_elasticity
 
   template <int dim>
   void
-  MixedElasticityProblemDD<dim>::solve_star()
+  MixedStokesProblemDD<dim>::solve_star()
   {
     TimerOutput::Scope t(computing_timer, "Solve star");
 
@@ -582,10 +582,10 @@ namespace dd_elasticity
 
   template <int dim>
   void
-  MixedElasticityProblemDD<dim>::compute_multiscale_basis()
+  MixedStokesProblemDD<dim>::compute_multiscale_basis()
   {
     TimerOutput::Scope t(computing_timer, "Compute multiscale basis");
-    ConstraintMatrix   constraints;
+    dealii::AffineConstraints<double>    constraints;
     QGauss<dim - 1>    quad(qdegree);
     FEFaceValues<dim>  fe_face_values(fe,
                                      quad,
@@ -649,7 +649,7 @@ namespace dd_elasticity
   //finding the l2 norm of a std::vector<double> vector
   template <int dim>
   double
-  MixedElasticityProblemDD<dim>::vect_norm(std::vector<double> v){
+  MixedStokesProblemDD<dim>::vect_norm(std::vector<double> v){
   	double result = 0;
   	for(unsigned int i=0; i<v.size(); ++i){
   		result+= v[i]*v[i];
@@ -660,7 +660,7 @@ namespace dd_elasticity
   //Calculating the given rotation matrix
   template <int dim>
   void
-  MixedElasticityProblemDD<dim>::givens_rotation(double v1, double v2, double &cs, double &sn){
+  MixedStokesProblemDD<dim>::givens_rotation(double v1, double v2, double &cs, double &sn){
 
   	if(abs(v1)<1e-25){
   		cs=0;
@@ -678,8 +678,8 @@ namespace dd_elasticity
   //Applying givens rotation to H column
   template <int dim>
   void
-  MixedElasticityProblemDD<dim>::apply_givens_rotation(std::vector<double> &h, std::vector<double> &cs, std::vector<double> &sn,
-  							unsigned int k_iteration){
+  MixedStokesProblemDD<dim>::apply_givens_rotation(std::vector<double> &h, std::vector<double> &cs, std::vector<double> &sn,
+                                                   unsigned int k_iteration){
 	  int k=k_iteration;
   	assert(h.size()>k+1); //size should be k+2
   	double temp;
@@ -709,7 +709,7 @@ namespace dd_elasticity
 
   template <int dim>
   void
-  MixedElasticityProblemDD<dim>::back_solve(std::vector<std::vector<double>> H, std::vector<double> beta, std::vector<double> &y){
+  MixedStokesProblemDD<dim>::back_solve(std::vector<std::vector<double>> H, std::vector<double> beta, std::vector<double> &y){
   	 int k = beta.size()-1;
   	 assert(y.size()==beta.size()-1);
   	 for(int i=0; i<y.size();i++)
@@ -726,7 +726,7 @@ namespace dd_elasticity
 //local GMRES function.
   template <int dim>
     void
-    MixedElasticityProblemDD<dim>::local_gmres(const unsigned int &maxiter)
+    MixedStokesProblemDD<dim>::local_gmres(const unsigned int &maxiter)
     {
       TimerOutput::Scope t(computing_timer, "Local CG");
 
@@ -757,7 +757,7 @@ namespace dd_elasticity
       quad = QGauss<dim - 1>(qdegree);
 
 
-      ConstraintMatrix  constraints;
+      dealii::AffineConstraints<double>   constraints;
       FEFaceValues<dim> fe_face_values(fe,
                                        quad,
                                        update_values | update_normal_vectors |
@@ -827,13 +827,13 @@ namespace dd_elasticity
 
             MPI_Send(&r[side][0],
                      r[side].size(),
-                     MPI::DOUBLE,
+                     MPI_DOUBLE,
                      neighbors[side],
                      this_mpi,
                      mpi_communicator);
             MPI_Recv(&r_receive_buffer[0],
                      r_receive_buffer.size(),
-                     MPI::DOUBLE,
+                     MPI_DOUBLE,
                      neighbors[side],
                      neighbors[side],
                      mpi_communicator,
@@ -935,13 +935,13 @@ namespace dd_elasticity
 
                 MPI_Send(&interface_data_send[side][0],
                          interface_dofs[side].size(),
-                         MPI::DOUBLE,
+                         MPI_DOUBLE,
                          neighbors[side],
                          this_mpi,
                          mpi_communicator);
                 MPI_Recv(&interface_data_receive[side][0],
                          interface_dofs[side].size(),
-                         MPI::DOUBLE,
+                         MPI_DOUBLE,
                          neighbors[side],
                          neighbors[side],
                          mpi_communicator,
@@ -1099,7 +1099,7 @@ namespace dd_elasticity
   //actual GMRES function.
     template <int dim>
       void
-      MixedElasticityProblemDD<dim>::testing_gmres(const unsigned int &maxiter)
+      MixedStokesProblemDD<dim>::testing_gmres(const unsigned int &maxiter)
       {
 
         TimerOutput::Scope t(computing_timer, "Local CG");
@@ -1132,7 +1132,7 @@ namespace dd_elasticity
 //        quad = QGauss<dim - 1>(qdegree);
 //
 //
-//        ConstraintMatrix  constraints;
+//        dealii::AffineConstraints<double>   constraints;
 //        FEFaceValues<dim> fe_face_values(fe,
 //                                         quad,
 //                                         update_values | update_normal_vectors |
@@ -1214,13 +1214,13 @@ namespace dd_elasticity
               r[side]=b;
 //              MPI_Send(&r[side][0],
 //                       r[side].size(),
-//                       MPI::DOUBLE,
+//                       MPI_DOUBLE,
 //                       neighbors[side],
 //                       this_mpi,
 //                       mpi_communicator);
 //              MPI_Recv(&r_receive_buffer[0],
 //                       r_receive_buffer.size(),
-//                       MPI::DOUBLE,
+//                       MPI_DOUBLE,
 //                       neighbors[side],
 //                       neighbors[side],
 //                       mpi_communicator,
@@ -1327,13 +1327,13 @@ namespace dd_elasticity
 //
 //                  MPI_Send(&interface_data_send[side][0],
 //                           interface_dofs[side].size(),
-//                           MPI::DOUBLE,
+//                           MPI_DOUBLE,
 //                           neighbors[side],
 //                           this_mpi,
 //                           mpi_communicator);
 //                  MPI_Recv(&interface_data_receive[side][0],
 //                           interface_dofs[side].size(),
-//                           MPI::DOUBLE,
+//                           MPI_DOUBLE,
 //                           neighbors[side],
 //                           neighbors[side],
 //                           mpi_communicator,
@@ -1530,7 +1530,7 @@ namespace dd_elasticity
 
   template <int dim>
   void
-  MixedElasticityProblemDD<dim>::local_cg(const unsigned int &maxiter)
+  MixedStokesProblemDD<dim>::local_cg(const unsigned int &maxiter)
   {
     TimerOutput::Scope t(computing_timer, "Local CG");
 
@@ -1560,7 +1560,7 @@ namespace dd_elasticity
     quad = QGauss<dim - 1>(qdegree);
 
 
-    ConstraintMatrix  constraints;
+    dealii::AffineConstraints<double>   constraints;
     FEFaceValues<dim> fe_face_values(fe,
                                      quad,
                                      update_values | update_normal_vectors |
@@ -1604,13 +1604,13 @@ namespace dd_elasticity
 
           MPI_Send(&r[side][0],
                    r[side].size(),
-                   MPI::DOUBLE,
+                   MPI_DOUBLE,
                    neighbors[side],
                    this_mpi,
                    mpi_communicator);
           MPI_Recv(&r_receive_buffer[0],
                    r_receive_buffer.size(),
-                   MPI::DOUBLE,
+                   MPI_DOUBLE,
                    neighbors[side],
                    neighbors[side],
                    mpi_communicator,
@@ -1667,13 +1667,13 @@ namespace dd_elasticity
 
               MPI_Send(&interface_data_send[side][0],
                        interface_dofs[side].size(),
-                       MPI::DOUBLE,
+                       MPI_DOUBLE,
                        neighbors[side],
                        this_mpi,
                        mpi_communicator);
               MPI_Recv(&interface_data_receive[side][0],
                        interface_dofs[side].size(),
-                       MPI::DOUBLE,
+                       MPI_DOUBLE,
                        neighbors[side],
                        neighbors[side],
                        mpi_communicator,
@@ -1780,10 +1780,10 @@ namespace dd_elasticity
 
 
 
-  // MixedElasticityProblemDD::compute_interface_error
+  // MixedStokesProblemDD::compute_interface_error
   template <int dim>
   double
-  MixedElasticityProblemDD<dim>::compute_interface_error(
+  MixedStokesProblemDD<dim>::compute_interface_error(
     Function<dim> &exact_solution)
   {
     system_rhs_star_elast = 0;
@@ -1874,7 +1874,7 @@ namespace dd_elasticity
     solve_star();
 
     // Project the solution to the mortar space
-    ConstraintMatrix constraints;
+    dealii::AffineConstraints<double>  constraints;
     project_mortar(P_fine2coarse,
                    dof_handler,
                    solution_star_elast,
@@ -1934,10 +1934,10 @@ namespace dd_elasticity
   }
 
 
-  // MixedElasticityProblemDD::compute_errors
+  // MixedStokesProblemDD::compute_errors
   template <int dim>
   void
-  MixedElasticityProblemDD<dim>::compute_errors(const unsigned int &cycle)
+  MixedStokesProblemDD<dim>::compute_errors(const unsigned int &cycle)
   {
     TimerOutput::Scope t(computing_timer, "Compute Errors");
 
@@ -2135,12 +2135,12 @@ namespace dd_elasticity
   }
 
 
-  // MixedElasticityProblemDD::output_results
+  // MixedStokesProblemDD::output_results
   template <int dim>
   void
-  MixedElasticityProblemDD<dim>::output_results(const unsigned int &cycle,
-                                                const unsigned int &refine,
-                                                const std::string & name)
+  MixedStokesProblemDD<dim>::output_results(const unsigned int &cycle,
+                                            const unsigned int &refine,
+                                            const std::string & name)
   {
     TimerOutput::Scope t(computing_timer, "Output results");
     unsigned int       n_processes =
@@ -2282,10 +2282,10 @@ namespace dd_elasticity
   }
 
 
-  // MixedElasticityProblemDD::run
+  // MixedStokesProblemDD::run
   template <int dim>
   void
-  MixedElasticityProblemDD<dim>::run(
+  MixedStokesProblemDD<dim>::run(
 
     const unsigned int                            refine,
     const std::vector<std::vector<unsigned int>> &reps,
@@ -2421,6 +2421,6 @@ namespace dd_elasticity
     dof_handler_mortar.clear();
   }
 
-  template class MixedElasticityProblemDD<2>;
-  template class MixedElasticityProblemDD<3>;
-} // namespace dd_elasticity
+  template class MixedStokesProblemDD<2>;
+  template class MixedStokesProblemDD<3>;
+} // namespace dd_stokes

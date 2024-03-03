@@ -1,0 +1,12 @@
+.cproject
+*.vtu
+*.pvtu
+CMakeCache.txt
+DarcyVT
+.settings/
+CMakeFiles/
+cmake_install.cmake
+.project
+Makefile
+*.tex
+*.lyx

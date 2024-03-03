@@ -26,6 +26,8 @@
 #include <deal.II/lac/constraint_matrix.h>
 #include <deal.II/lac/sparse_direct.h>
 
+#include <deal.II/lac/affine_constraints.h>
+
 
 // Threads
 #include <deal.II/base/work_stream.h>
@@ -558,7 +560,7 @@ namespace Projector
       const std::map<types::boundary_id, const Function<spacedim, number> *>
         &                        boundary_functions,
       const Quadrature<dim - 1> &q,
-      ConstraintMatrix &         constraints,
+      dealii::AffineConstraints<double>  &         constraints,
       std::vector<unsigned int>  component_mapping =
         std::vector<unsigned int>());
 
@@ -571,7 +573,7 @@ namespace Projector
       dof_to_boundary_mapping.clear();
     }
 
-    // friend class MixedElasticityProblemDD<dim>;
+    // friend class MixedStokesProblemDD<dim>;
 
   private:
     unsigned int                         state;
@@ -728,7 +730,7 @@ namespace Projector
     const std::map<types::boundary_id, const Function<spacedim, number> *>
       &                        boundary_functions,
     const Quadrature<dim - 1> &q,
-    ConstraintMatrix &         constraints,
+    dealii::AffineConstraints<double>  &         constraints,
     std::vector<unsigned int>  component_mapping)
   {
     std::map<types::global_dof_index, number> boundary_values;

@@ -54,7 +54,7 @@ namespace dd_elasticity
 {
   using namespace dealii;
 
-  // MixedElasticityDD class constructor
+  // MixedStokesDD class constructor
   template <int dim>
   MixedElasticityProblemDD<dim>::MixedElasticityProblemDD(
     const unsigned int degree,
@@ -127,9 +127,8 @@ namespace dd_elasticity
     if (mortar_flag)
       dof_handler_mortar.distribute_dofs(fe_mortar);
 
-    std::vector<types::global_dof_index> dofs_per_component(
-      dim * dim + dim + 0.5 * dim * (dim - 1));
-    DoFTools::count_dofs_per_component(dof_handler, dofs_per_component);
+    std::vector<types::global_dof_index> dofs_per_component =
+            DoFTools::count_dofs_per_fe_component (dof_handler);
     unsigned int n_s = 0, n_u = 0, n_p = 0;
 
     for (unsigned int i = 0; i < dim; ++i)
@@ -195,10 +194,8 @@ namespace dd_elasticity
 
     if (mortar_flag)
       {
-        std::vector<types::global_dof_index> dofs_per_component_mortar(
-          dim * dim + dim + 0.5 * dim * (dim - 1));
-        DoFTools::count_dofs_per_component(dof_handler_mortar,
-                                           dofs_per_component_mortar);
+        std::vector<types::global_dof_index> dofs_per_component_mortar =
+        DoFTools::count_dofs_per_fe_component (dof_handler_mortar);
         unsigned int n_s_mortar = 0, n_u_mortar = 0, n_p_mortar = 0;
 
         for (unsigned int i = 0; i < dim; ++i)
@@ -585,7 +582,7 @@ namespace dd_elasticity
   MixedElasticityProblemDD<dim>::compute_multiscale_basis()
   {
     TimerOutput::Scope t(computing_timer, "Compute multiscale basis");
-    ConstraintMatrix   constraints;
+    dealii::AffineConstraints<double>    constraints;
     QGauss<dim - 1>    quad(qdegree);
     FEFaceValues<dim>  fe_face_values(fe,
                                      quad,
@@ -751,7 +748,7 @@ namespace dd_elasticity
       quad = QGauss<dim - 1>(qdegree);
 
 
-      ConstraintMatrix  constraints;
+      dealii::AffineConstraints<double>   constraints;
       FEFaceValues<dim> fe_face_values(fe,
                                        quad,
                                        update_values | update_normal_vectors |
@@ -830,13 +827,13 @@ namespace dd_elasticity
 
             MPI_Send(&r[side][0],
                      r[side].size(),
-                     MPI::DOUBLE,
+                     MPI_DOUBLE,
                      neighbors[side],
                      this_mpi,
                      mpi_communicator);
             MPI_Recv(&r_receive_buffer[0],
                      r_receive_buffer.size(),
-                     MPI::DOUBLE,
+                     MPI_DOUBLE,
                      neighbors[side],
                      neighbors[side],
                      mpi_communicator,
@@ -907,13 +904,13 @@ namespace dd_elasticity
 
                 MPI_Send(&interface_data_send[side][0],
                          interface_dofs[side].size(),
-                         MPI::DOUBLE,
+                         MPI_DOUBLE,
                          neighbors[side],
                          this_mpi,
                          mpi_communicator);
                 MPI_Recv(&interface_data_receive[side][0],
                          interface_dofs[side].size(),
-                         MPI::DOUBLE,
+                         MPI_DOUBLE,
                          neighbors[side],
                          neighbors[side],
                          mpi_communicator,
@@ -1119,7 +1116,7 @@ namespace dd_elasticity
     quad = QGauss<dim - 1>(qdegree);
 
 
-    ConstraintMatrix  constraints;
+    dealii::AffineConstraints<double>   constraints;
     FEFaceValues<dim> fe_face_values(fe,
                                      quad,
                                      update_values | update_normal_vectors |
@@ -1163,13 +1160,13 @@ namespace dd_elasticity
 
           MPI_Send(&r[side][0],
                    r[side].size(),
-                   MPI::DOUBLE,
+                   MPI_DOUBLE,
                    neighbors[side],
                    this_mpi,
                    mpi_communicator);
           MPI_Recv(&r_receive_buffer[0],
                    r_receive_buffer.size(),
-                   MPI::DOUBLE,
+                   MPI_DOUBLE,
                    neighbors[side],
                    neighbors[side],
                    mpi_communicator,
@@ -1226,13 +1223,13 @@ namespace dd_elasticity
 
               MPI_Send(&interface_data_send[side][0],
                        interface_dofs[side].size(),
-                       MPI::DOUBLE,
+                       MPI_DOUBLE,
                        neighbors[side],
                        this_mpi,
                        mpi_communicator);
               MPI_Recv(&interface_data_receive[side][0],
                        interface_dofs[side].size(),
-                       MPI::DOUBLE,
+                       MPI_DOUBLE,
                        neighbors[side],
                        neighbors[side],
                        mpi_communicator,
@@ -1433,7 +1430,7 @@ namespace dd_elasticity
     solve_star();
 
     // Project the solution to the mortar space
-    ConstraintMatrix constraints;
+    dealii::AffineConstraints<double>  constraints;
     project_mortar(P_fine2coarse,
                    dof_handler,
                    solution_star_elast,

@@ -1,8 +1,9 @@
 /* ---------------------------------------------------------------------
- * Declaration of MixedElasticityProblemDD class template
+ * Declaration of MixedStokesProblemDD class template
  * ---------------------------------------------------------------------
  *
- * Author: Eldar Khattatov, University of Pittsburgh, 2016 - 2017
+ * Author: Manu Jayadharan, Northwestern University, 2024.
+ * based on the Eldar Khattatov's Elasticity DD implementation from 2017.
  */
 
 #ifndef ELASTICITY_MFEDD_ELASTICITY_MFEDD_H
@@ -22,18 +23,18 @@
 
 #include "projector.h"
 
-namespace dd_elasticity
+namespace dd_stokes
 {
   using namespace dealii;
 
   // Mixed Elasticity Domain Decomposition class template
   template <int dim>
-  class MixedElasticityProblemDD
+  class MixedStokesProblemDD
   {
   public:
-    MixedElasticityProblemDD(const unsigned int degree,
-                             const unsigned int mortar_flag   = 0,
-                             const unsigned int mortar_degree = 0);
+    MixedStokesProblemDD(const unsigned int degree,
+                         const unsigned int mortar_flag   = 0,
+                         const unsigned int mortar_degree = 0);
 
     void
     run(const unsigned int                            refine,
@@ -166,6 +167,6 @@ namespace dd_elasticity
 
 
   };
-} // namespace dd_elasticity
+} // namespace dd_stokes
 
 #endif // ELASTICITY_MFEDD_ELASTICITY_MFEDD_H

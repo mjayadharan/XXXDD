@@ -1,34 +1,23 @@
+
+# Consider dependencies only in project.
+set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
+
 # The set of languages for which implicit dependencies are needed:
 set(CMAKE_DEPENDS_LANGUAGES
-  "CXX"
-  )
-# The set of files for implicit dependencies of each language:
-set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/wicked_boy/Desktop/Biot codes/ElasticityDD/src/elast_dd.cc" "/home/wicked_boy/Desktop/Biot codes/ElasticityDD/CMakeFiles/ElastDD.dir/src/elast_dd.cc.o"
-  "/home/wicked_boy/Desktop/Biot codes/ElasticityDD/src/elasticity_mfedd.cc" "/home/wicked_boy/Desktop/Biot codes/ElasticityDD/CMakeFiles/ElastDD.dir/src/elasticity_mfedd.cc.o"
-  )
-set(CMAKE_CXX_COMPILER_ID "GNU")
-
-# Preprocessor definitions for this target.
-set(CMAKE_TARGET_DEFINITIONS_CXX
-  "BOOST_NO_AUTO_PTR"
-  "DEBUG"
-  "TBB_DO_ASSERT=1"
-  "TBB_USE_DEBUG"
   )
 
-# The include file search paths:
-set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/home/wicked_boy/Desktop/dealii/dealii.installed/include"
-  "/home/wicked_boy/Desktop/dealii/dealii.installed/include/deal.II/bundled"
-  "/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi"
-  "/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi/opal/mca/event/libevent2022/libevent"
-  "/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi/opal/mca/event/libevent2022/libevent/include"
-  "/usr/lib/x86_64-linux-gnu/openmpi/include"
+# The set of dependency files which are needed:
+set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/Users/manujayadharan/git_repos/XXXDD/src/elast_dd.cc" "CMakeFiles/ElastDD.dir/src/elast_dd.cc.o" "gcc" "CMakeFiles/ElastDD.dir/src/elast_dd.cc.o.d"
+  "/Users/manujayadharan/git_repos/XXXDD/src/elasticity_mfedd.cc" "CMakeFiles/ElastDD.dir/src/elasticity_mfedd.cc.o" "gcc" "CMakeFiles/ElastDD.dir/src/elasticity_mfedd.cc.o.d"
   )
 
-# Targets to which this target links.
-set(CMAKE_TARGET_LINKED_INFO_FILES
+# Targets to which this target links which contain Fortran sources.
+set(CMAKE_Fortran_TARGET_LINKED_INFO_FILES
+  )
+
+# Targets to which this target links which contain Fortran sources.
+set(CMAKE_Fortran_TARGET_FORWARD_LINKED_INFO_FILES
   )
 
 # Fortran module output directory.

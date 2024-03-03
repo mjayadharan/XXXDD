@@ -1,10 +1,11 @@
-/home/wicked_boy/Desktop/Biot codes/ElasticityDD/CMakeFiles/rebuild_cache.dir
-/home/wicked_boy/Desktop/Biot codes/ElasticityDD/CMakeFiles/edit_cache.dir
-/home/wicked_boy/Desktop/Biot codes/ElasticityDD/CMakeFiles/info.dir
-/home/wicked_boy/Desktop/Biot codes/ElasticityDD/CMakeFiles/strip_comments.dir
-/home/wicked_boy/Desktop/Biot codes/ElasticityDD/CMakeFiles/run.dir
-/home/wicked_boy/Desktop/Biot codes/ElasticityDD/CMakeFiles/ElastDD.dir
-/home/wicked_boy/Desktop/Biot codes/ElasticityDD/CMakeFiles/debug.dir
-/home/wicked_boy/Desktop/Biot codes/ElasticityDD/CMakeFiles/release.dir
-/home/wicked_boy/Desktop/Biot codes/ElasticityDD/CMakeFiles/runclean.dir
-/home/wicked_boy/Desktop/Biot codes/ElasticityDD/CMakeFiles/distclean.dir
+/Users/manujayadharan/git_repos/XXXDD/CMakeFiles/StokesDD.dir
+/Users/manujayadharan/git_repos/XXXDD/CMakeFiles/run.dir
+/Users/manujayadharan/git_repos/XXXDD/CMakeFiles/sign.dir
+/Users/manujayadharan/git_repos/XXXDD/CMakeFiles/debug.dir
+/Users/manujayadharan/git_repos/XXXDD/CMakeFiles/release.dir
+/Users/manujayadharan/git_repos/XXXDD/CMakeFiles/runclean.dir
+/Users/manujayadharan/git_repos/XXXDD/CMakeFiles/distclean.dir
+/Users/manujayadharan/git_repos/XXXDD/CMakeFiles/strip_comments.dir
+/Users/manujayadharan/git_repos/XXXDD/CMakeFiles/info.dir
+/Users/manujayadharan/git_repos/XXXDD/CMakeFiles/edit_cache.dir
+/Users/manujayadharan/git_repos/XXXDD/CMakeFiles/rebuild_cache.dir

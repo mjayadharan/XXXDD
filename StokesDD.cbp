@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="StokesDD"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="clang"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\deal_ii_build\;CMake Files\..\..\deal_ii_build\lib\;CMake Files\..\..\deal_ii_build\lib\cmake\;CMake Files\..\..\deal_ii_build\lib\cmake\deal.II\;CMake Files\..\..\deal_ii_build\share\;CMake Files\..\..\deal_ii_build\share\deal.II\;CMake Files\..\..\deal_ii_build\share\deal.II\macros\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/manujayadharan/git_repos/XXXDD"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="StokesDD">
+				<Option output="/Users/manujayadharan/git_repos/XXXDD/StokesDD" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/manujayadharan/git_repos/XXXDD"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add option="-DDEBUG"/>
+					<Add directory="/Users/manujayadharan/Downloads/dealii-9.5.2/build/include"/>
+					<Add directory="/Users/manujayadharan/Downloads/dealii-9.5.2/include"/>
+					<Add directory="/Users/manujayadharan/Downloads/dealii-9.5.2/bundled/tbb-2018_U2/include"/>
+					<Add directory="/Users/manujayadharan/Downloads/dealii-9.5.2/bundled/umfpack/UMFPACK/Include"/>
+					<Add directory="/Users/manujayadharan/Downloads/dealii-9.5.2/bundled/umfpack/AMD/Include"/>
+					<Add directory="/Users/manujayadharan/Downloads/dealii-9.5.2/bundled/kokkos-3.7.00/algorithms/src"/>
+					<Add directory="/Users/manujayadharan/Downloads/dealii-9.5.2/bundled/kokkos-3.7.00/containers/src"/>
+					<Add directory="/Users/manujayadharan/Downloads/dealii-9.5.2/bundled/kokkos-3.7.00/core/src"/>
+					<Add directory="/Users/manujayadharan/Downloads/dealii-9.5.2/bundled/kokkos-3.7.00/simd/src"/>
+					<Add directory="/Users/manujayadharan/Downloads/dealii-9.5.2/bundled/kokkos-3.7.00/tpls/desul/include"/>
+					<Add directory="/Users/manujayadharan/Downloads/dealii-9.5.2/bundled/muparser_v2_3_3/include"/>
+					<Add directory="/opt/homebrew/Cellar/open-mpi/5.0.2/include"/>
+					<Add directory="/opt/homebrew/opt/openmpi/include"/>
+					<Add directory="/opt/homebrew/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 StokesDD"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="StokesDD/fast">
+				<Option output="/Users/manujayadharan/git_repos/XXXDD/StokesDD" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/manujayadharan/git_repos/XXXDD"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add option="-DDEBUG"/>
+					<Add directory="/Users/manujayadharan/Downloads/dealii-9.5.2/build/include"/>
+					<Add directory="/Users/manujayadharan/Downloads/dealii-9.5.2/include"/>
+					<Add directory="/Users/manujayadharan/Downloads/dealii-9.5.2/bundled/tbb-2018_U2/include"/>
+					<Add directory="/Users/manujayadharan/Downloads/dealii-9.5.2/bundled/umfpack/UMFPACK/Include"/>
+					<Add directory="/Users/manujayadharan/Downloads/dealii-9.5.2/bundled/umfpack/AMD/Include"/>
+					<Add directory="/Users/manujayadharan/Downloads/dealii-9.5.2/bundled/kokkos-3.7.00/algorithms/src"/>
+					<Add directory="/Users/manujayadharan/Downloads/dealii-9.5.2/bundled/kokkos-3.7.00/containers/src"/>
+					<Add directory="/Users/manujayadharan/Downloads/dealii-9.5.2/bundled/kokkos-3.7.00/core/src"/>
+					<Add directory="/Users/manujayadharan/Downloads/dealii-9.5.2/bundled/kokkos-3.7.00/simd/src"/>
+					<Add directory="/Users/manujayadharan/Downloads/dealii-9.5.2/bundled/kokkos-3.7.00/tpls/desul/include"/>
+					<Add directory="/Users/manujayadharan/Downloads/dealii-9.5.2/bundled/muparser_v2_3_3/include"/>
+					<Add directory="/opt/homebrew/Cellar/open-mpi/5.0.2/include"/>
+					<Add directory="/opt/homebrew/opt/openmpi/include"/>
+					<Add directory="/opt/homebrew/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 StokesDD/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="run">
+				<Option working_dir="/Users/manujayadharan/git_repos/XXXDD"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 run"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="sign">
+				<Option working_dir="/Users/manujayadharan/git_repos/XXXDD"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 sign"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="debug">
+				<Option working_dir="/Users/manujayadharan/git_repos/XXXDD"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 debug"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="release">
+				<Option working_dir="/Users/manujayadharan/git_repos/XXXDD"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 release"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="runclean">
+				<Option working_dir="/Users/manujayadharan/git_repos/XXXDD"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 runclean"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="distclean">
+				<Option working_dir="/Users/manujayadharan/git_repos/XXXDD"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 distclean"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="strip_comments">
+				<Option working_dir="/Users/manujayadharan/git_repos/XXXDD"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 strip_comments"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="info">
+				<Option working_dir="/Users/manujayadharan/git_repos/XXXDD"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 info"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/manujayadharan/git_repos/XXXDD"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/Users/manujayadharan/git_repos/XXXDD"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/manujayadharan/git_repos/XXXDD/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/manujayadharan/git_repos/XXXDD/inc/data.h">
+			<Option target="StokesDD"/>
+		</Unit>
+		<Unit filename="/Users/manujayadharan/git_repos/XXXDD/inc/elasticity_mfedd.h">
+			<Option target="StokesDD"/>
+		</Unit>
+		<Unit filename="/Users/manujayadharan/git_repos/XXXDD/inc/manu_testing.h">
+			<Option target="StokesDD"/>
+		</Unit>
+		<Unit filename="/Users/manujayadharan/git_repos/XXXDD/inc/projector.h">
+			<Option target="StokesDD"/>
+		</Unit>
+		<Unit filename="/Users/manujayadharan/git_repos/XXXDD/inc/utilities.h">
+			<Option target="StokesDD"/>
+		</Unit>
+		<Unit filename="/Users/manujayadharan/git_repos/XXXDD/src/elast_dd.cc">
+			<Option target="StokesDD"/>
+		</Unit>
+		<Unit filename="/Users/manujayadharan/git_repos/XXXDD/src/elasticity_mfedd.cc">
+			<Option target="StokesDD"/>
+		</Unit>
+		<Unit filename="/Users/manujayadharan/git_repos/XXXDD/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/manujayadharan/git_repos/XXXDD/../../deal_ii_build/lib/cmake/deal.II/deal.IIConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\deal_ii_build\lib\cmake\deal.II\"/>
+		</Unit>
+		<Unit filename="/Users/manujayadharan/git_repos/XXXDD/../../deal_ii_build/lib/cmake/deal.II/deal.IIConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\deal_ii_build\lib\cmake\deal.II\"/>
+		</Unit>
+		<Unit filename="/Users/manujayadharan/git_repos/XXXDD/../../deal_ii_build/lib/cmake/deal.II/deal.IITargets.cmake">
+			<Option virtualFolder="CMake Files\..\..\deal_ii_build\lib\cmake\deal.II\"/>
+		</Unit>
+		<Unit filename="/Users/manujayadharan/git_repos/XXXDD/../../deal_ii_build/share/deal.II/macros/macro_deal_ii_add_test.cmake">
+			<Option virtualFolder="CMake Files\..\..\deal_ii_build\share\deal.II\macros\"/>
+		</Unit>
+		<Unit filename="/Users/manujayadharan/git_repos/XXXDD/../../deal_ii_build/share/deal.II/macros/macro_deal_ii_initialize_cached_variables.cmake">
+			<Option virtualFolder="CMake Files\..\..\deal_ii_build\share\deal.II\macros\"/>
+		</Unit>
+		<Unit filename="/Users/manujayadharan/git_repos/XXXDD/../../deal_ii_build/share/deal.II/macros/macro_deal_ii_invoke_autopilot.cmake">
+			<Option virtualFolder="CMake Files\..\..\deal_ii_build\share\deal.II\macros\"/>
+		</Unit>
+		<Unit filename="/Users/manujayadharan/git_repos/XXXDD/../../deal_ii_build/share/deal.II/macros/macro_deal_ii_pickup_tests.cmake">
+			<Option virtualFolder="CMake Files\..\..\deal_ii_build\share\deal.II\macros\"/>
+		</Unit>
+		<Unit filename="/Users/manujayadharan/git_repos/XXXDD/../../deal_ii_build/share/deal.II/macros/macro_deal_ii_query_git_information.cmake">
+			<Option virtualFolder="CMake Files\..\..\deal_ii_build\share\deal.II\macros\"/>
+		</Unit>
+		<Unit filename="/Users/manujayadharan/git_repos/XXXDD/../../deal_ii_build/share/deal.II/macros/macro_deal_ii_setup_target.cmake">
+			<Option virtualFolder="CMake Files\..\..\deal_ii_build\share\deal.II\macros\"/>
+		</Unit>
+		<Unit filename="/Users/manujayadharan/git_repos/XXXDD/../../deal_ii_build/share/deal.II/macros/macro_shell_escape_option_groups.cmake">
+			<Option virtualFolder="CMake Files\..\..\deal_ii_build\share\deal.II\macros\"/>
+		</Unit>
+		<Unit filename="/Users/manujayadharan/git_repos/XXXDD/../../deal_ii_build/share/deal.II/macros/macro_target_compile_flags.cmake">
+			<Option virtualFolder="CMake Files\..\..\deal_ii_build\share\deal.II\macros\"/>
+		</Unit>
+		<Unit filename="/Users/manujayadharan/git_repos/XXXDD/../../deal_ii_build/share/deal.II/macros/macro_target_link_flags.cmake">
+			<Option virtualFolder="CMake Files\..\..\deal_ii_build\share\deal.II\macros\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
